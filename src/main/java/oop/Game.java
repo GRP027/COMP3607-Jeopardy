@@ -1,25 +1,29 @@
 package oop;
 
-public class Game {
-    private Player[] players;
-    private Category[] categories;
-    private int currentPlayerIndex;
+import java.util.List;
 
-    public Game(Player[] players, Category[] categories) {
+public class Game {
+    private List<Player> players;
+    private List<Category> categories;
+    private Player currentPlayer;
+
+    public Game(List<Player> players, List<Category> categories) {
         this.players = players;
         this.categories = categories;
-        this.currentPlayerIndex = 0;
+        this.currentPlayer = players.get(0);
     }
 
     public Player getCurrentPlayer() {
-        return players[currentPlayerIndex];
+        return currentPlayer;
     }
 
     public void nextPlayer() {
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+        int currentIndex = players.indexOf(currentPlayer);
+        int nextIndex = (currentIndex + 1) % players.size();
+        currentPlayer = players.get(nextIndex);
     }
 
-    public Category[] getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
     
