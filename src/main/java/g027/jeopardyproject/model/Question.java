@@ -17,6 +17,7 @@ public class Question {
     private String answer;
     private String category;
     private boolean asked;
+    
     public Question(String text, int value, String answer, String category) {
         this.text = text;
         this.value = value;
