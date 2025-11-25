@@ -3,7 +3,7 @@
 Multi-Player Jeopardy Game — Project Wiki
 Welcome to the official Wiki for the Multi-Player Jeopardy Game, a Java application developed using SOLID principles, multiple design patterns, and a modular architecture. This Wiki provides full documentation of the system, its architecture, data formats, testing strategy, and development workflow.
 This project satisfies the following requirements:
-✔ Features
+ ✔ Features
 Runs locally on a single device
 Supports 1–4 players
 Loads questions from CSV, JSON, or XML
