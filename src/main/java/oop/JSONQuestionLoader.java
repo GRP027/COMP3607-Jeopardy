@@ -1,4 +1,4 @@
-// jeopardy/data/JsonQuestionLoader.java
+
 package jeopardy.data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
