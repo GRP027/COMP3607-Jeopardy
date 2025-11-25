@@ -32,6 +32,7 @@ public class Player {
         this.score += points;
     }
 
+    //no need for this method but added for symmetry
     public void subtractScore(int points) {
         this.score -= points;
     }

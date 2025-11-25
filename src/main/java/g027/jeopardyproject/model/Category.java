@@ -29,9 +29,11 @@ public class Category {
         return questions;
     }
 
-    public String getName() { return title; }
+    public String getName() { 
+        return title;
+    }
 
-        public void addQuestion(Question q) {
+    public void addQuestion(Question q) {
         questions.add(q);
     }
 

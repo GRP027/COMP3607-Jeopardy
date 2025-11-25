@@ -2,6 +2,9 @@ package g027.jeopardyproject;
 
 import g027.jeopardyproject.model.Player;
 import g027.jeopardyproject.model.Question;
+import g027.jeopardyproject.model.Category;
+import g027.jeopardyproject.model.Game;
+import g027.jeopardyproject.io.CsvQuestionLoader;
 
 /*
 GROUP 27 JEOPARDY PROJECT - COMP3607 S01 2025/2026
@@ -15,14 +18,17 @@ MEMBERS:
 This is the main entry point for the Jeopardy Project application.
 */
 public class Main {
+/* 
+    public static void main(String[] args) throws Exception {
 
-    public static void main(String[] args) {
+        Game game = new Game();
+        CsvQuestionLoader loader = new CsvQuestionLoader();
 
-        Player p = new Player("Alice");
-        Question q = new Question("What is 2+2?" , 100, "4", "Math");
+        for (Category c : loader.load("sample_game_CSV.csv")) {
+            game.addCategory(c);
+        }
 
-        System.out.println("Player: " + p.getName() + " Score: " + p.getScore());
-        System.out.println("Sample Question: " + q.getText() +
-                " (" + q.getValue() + " points)");
+        System.out.println("Loaded " + game.getCategories().size() + " categories with multiple-choice questions.");
     }
+        */
 }

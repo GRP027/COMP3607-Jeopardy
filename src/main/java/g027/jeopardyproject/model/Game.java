@@ -1,4 +1,5 @@
 package g027.jeopardyproject.model;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -14,19 +15,27 @@ This class coordinates between Model, Strategy, Loader, and GUI components to ma
 */
 
 public class Game {
-    private List<Player> players;
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
     private Player currentPlayer;
 
     
-    public Game(List<Player> players, List<Category> categories) {
-        this.players = players;
-        this.categories = categories;
+    public Game() {
+        //this.players = players;
+        //this.categories = categories;
         this.currentPlayer = players.get(0);
     }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public void addCategory(Category c) {
+        categories.add(c);
+    }
+
+    public void addPlayer(Player p) {
+        players.add(p);
     }
 
     public void nextPlayer() {
@@ -39,4 +48,7 @@ public class Game {
         return categories;
     }
     
+        public void updateScore(Player p, int delta) {
+        p.addScore(delta);
+    }
 }
