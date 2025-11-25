@@ -9,33 +9,56 @@ MEMBERS:
 - Reshon Nelson     |   816041070
 --------------------------------------------------------------
 
-This class represents a question in the game, including its text, value, answer, category, and whether it has been asked.
+This class represents a question in the game, including its multiple choice options, value, the correct answer, category, and whether it has been asked.
 */
 public class Question {
-    private String text;
+    private String question;
     private int value;
-    private String answer;
+    private char correctAnswer;
+    private String a;
+    private String b;
+    private String c;
+    private String d;
     private String category;
     private boolean asked;
     
-    public Question(String text, int value, String answer, String category) {
-        this.text = text;
+    public Question(String category, int value, String question, String a, String b, String c, String d, char correctAnswer) {
+        this.question = question;
         this.value = value;
-        this.answer = answer;
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+        this.correctAnswer = correctAnswer;
         this.asked = false;
         this.category = category;
     }
 
-    public String getText() {
-        return text;
+    public String getquestion() {
+        return question;
     }
 
     public int getValue() {
         return value;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getA() {
+        return a;
+    }
+    public String getB() {
+        return b;
+    }
+
+    public String getC() {
+        return c;
+    }
+
+    public String getD() {
+        return d;
+    }
+
+    public char getcorrectAnswer() {
+        return correctAnswer;
     }
 
     public String getCategory() {

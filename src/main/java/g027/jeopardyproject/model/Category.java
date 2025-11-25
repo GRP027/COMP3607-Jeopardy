@@ -1,4 +1,5 @@
 package g027.jeopardyproject.model;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -14,11 +15,10 @@ This class represents a category in the game, containing a title and a list of q
 */
 public class Category {
     private String title;
-    private List<Question> questions;
+    private List<Question> questions= new ArrayList<>();
 
-    public Category(String title, List<Question> questions) {
+    public Category(String title) {
         this.title = title;
-        this.questions = questions;
     }
 
     public String getTitle() {
@@ -27,6 +27,12 @@ public class Category {
 
     public List<Question> getQuestions() {
         return questions;
+    }
+
+    public String getName() { return title; }
+
+        public void addQuestion(Question q) {
+        questions.add(q);
     }
 
 }
