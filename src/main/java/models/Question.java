@@ -10,6 +10,7 @@ public class Question {
     private final String optionC;
     private final String optionD;
     private final char correctAnswer; 
+    private boolean isAnswered = false;
 
     public Question(String category, int value, String questionText,
                     String optionA, String optionB, String optionC,
@@ -57,6 +58,12 @@ public class Question {
         return Objects.hash(category, value, questionText, optionA, optionB, optionC, optionD, correctAnswer);
     }
 
+    public boolean isAnswered() {
+        return isAnswered;
+    }
+    public void setAnswered() {
+        this.isAnswered = true;
+    }
     @Override
     public String toString() {
         return "Question{" +
