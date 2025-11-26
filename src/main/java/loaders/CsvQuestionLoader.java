@@ -1,12 +1,15 @@
 package loaders;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 
-
+import java.io.File; 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
-
-import models.Question;
+import java.util.Map;
+import java.util.LinkedHashMap; 
+import java.util.Objects; 
+import models.Question; 
 
 public class CsvQuestionLoader implements QuestionLoader {
 
@@ -14,25 +17,45 @@ public class CsvQuestionLoader implements QuestionLoader {
 
     @Override
     public Map<String, Map<Integer, Question>> loadQuestions(String filePath) throws IOException {
-        if (filePath == null || filePath.isEmpty()) {
-            throw new IllegalArgumentException("File path cannot be null or empty");
+        
+        Objects.requireNonNull(filePath, "File path cannot be null");
+        if (filePath.isEmpty()) {
+            throw new IllegalArgumentException("File path cannot be empty");
         }
 
-        Map<String, Map<Integer, Question>> gameBoard = new LinkedHashMap<>(); // preserve category order
+        
+        File csvFile = new File(filePath);
+        if (!csvFile.exists() || !csvFile.isFile()) {
+            throw new IOException("File not found or is a directory: " + filePath);
+        }
 
-        try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
+        Map<String, Map<Integer, Question>> gameBoard = new LinkedHashMap<>(); 
+
+        
+        try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
             String[] header = reader.readNext();
             if (header == null) {
-                throw new IOException("CSV file is empty");
+                // If a file is not completely empty, but the first row is blank
+                // The CsvReader might return null.
+                throw new IOException("CSV file is empty or contains no header row");
             }
 
+            // Optional: You could add a check here to validate the header columns if needed.
+
             String[] nextLine;
-            int lineNumber = 1; // after header
+            int lineNumber = 1; // Start line number at 1 for the first data row (after header)
             while ((nextLine = reader.readNext()) != null) {
                 lineNumber++;
+                
+                // CRITICAL VALIDATION: Check for empty lines or truncated rows
                 if (nextLine.length != EXPECTED_COLUMNS) {
+                    // Check if the row is entirely empty (opencsv might return an array of length 1 with an empty string)
+                    if (nextLine.length == 1 && nextLine[0].trim().isEmpty()) {
+                        continue; // Skip empty lines silently
+                    }
+                    
                     throw new IOException("Invalid row at line " + lineNumber +
-                            ": expected " + EXPECTED_COLUMNS + " columns, got " + nextLine.length);
+                                ": expected " + EXPECTED_COLUMNS + " columns, got " + nextLine.length);
                 }
 
                 String category = nextLine[0].trim();
@@ -40,9 +63,10 @@ public class CsvQuestionLoader implements QuestionLoader {
                 try {
                     value = Integer.parseInt(nextLine[1].trim());
                 } catch (NumberFormatException e) {
-                    throw new IOException("Invalid value at line " + lineNumber + ": " + nextLine[1], e);
+                    throw new IOException("Invalid value (must be an integer) at line " + lineNumber + ": " + nextLine[1], e);
                 }
-
+                
+                // Extract and trim all required fields
                 String questionText = nextLine[2].trim();
                 String optA = nextLine[3].trim();
                 String optB = nextLine[4].trim();
@@ -50,27 +74,30 @@ public class CsvQuestionLoader implements QuestionLoader {
                 String optD = nextLine[6].trim();
                 String correctAnsStr = nextLine[7].trim();
 
+                // Validation for correct answer format
                 if (correctAnsStr.length() != 1) {
-                    throw new IOException("Invalid correct answer at line " + lineNumber + ": " + correctAnsStr);
+                    throw new IOException("Invalid correct answer format at line " + lineNumber + ": '" + correctAnsStr + "'. Must be a single character.");
                 }
                 char correctAnswer = Character.toUpperCase(correctAnsStr.charAt(0));
+                // Question constructor handles the A, B, C, D validation, but we can do it here for better error message context
                 if (!"ABCD".contains(String.valueOf(correctAnswer))) {
                     throw new IOException("Correct answer must be A, B, C, or D at line " + lineNumber);
                 }
 
+                // Call the Question constructor (relies on its internal null/value checks)
                 Question question = new Question(category, value, questionText,
-                        optA, optB, optC, optD, correctAnswer);
+                            optA, optB, optC, optD, correctAnswer);
 
                 // Nested map: category → value → question
                 gameBoard.computeIfAbsent(category, k -> new LinkedHashMap<>());
                 if (gameBoard.get(category).containsKey(value)) {
                     throw new IOException("Duplicate question for category '" + category +
-                            "' and value " + value + " at line " + lineNumber);
+                                "' and value " + value + " at line " + lineNumber);
                 }
                 gameBoard.get(category).put(value, question);
             }
         } catch (CsvValidationException e) {
-            throw new IOException("CSV parsing error", e);
+            throw new IOException("CSV parsing error. Check file structure and delimiters.", e);
         }
 
         if (gameBoard.isEmpty()) {

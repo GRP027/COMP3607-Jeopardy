@@ -1,14 +1,14 @@
-
 package loaders;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-
-import jeopardy.model.Question;
-
+import models.Question;
+import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap; // Required for LinkedHashMap usage
 
 public class JsonQuestionLoader implements QuestionLoader {
 
@@ -20,23 +20,29 @@ public class JsonQuestionLoader implements QuestionLoader {
             throw new IllegalArgumentException("File path cannot be null or empty");
         }
 
-        List<Map<String, Object>> rawQuestions;
-        try {
-            rawQuestions = objectMapper.readValue(
-                objectMapper.writeValueAsString(
-                    objectMapper.readTree(filePath)
-                ),
-                new TypeReference<>() {}
-            );
-        } catch (MismatchedInputException e) {
-            throw new IOException("File is not a valid JSON array", e);
+        File jsonFile = new File(filePath);
+        if (!jsonFile.exists() || !jsonFile.isFile()) {
+            throw new IOException("File not found or is a directory: " + filePath);
         }
 
+        List<Map<String, Object>> rawQuestions;
+        try {
+            // CRITICAL FIX: Read the JSON file directly from the disk using File object.
+            rawQuestions = objectMapper.readValue(
+                jsonFile,
+                new TypeReference<List<Map<String, Object>>>() {}
+            );
+        } catch (MismatchedInputException e) {
+            throw new IOException("File content is not a valid JSON array of objects", e);
+        }
+
+        // Using LinkedHashMap to preserve category insertion order
         Map<String, Map<Integer, Question>> gameBoard = new LinkedHashMap<>();
 
         for (int i = 0; i < rawQuestions.size(); i++) {
             Map<String, Object> item = rawQuestions.get(i);
-            int lineNumber = i + 2; // 1-based + header-like
+            // i + 2 is used to provide a 1-based index plus an offset, assuming a header
+            int lineNumber = i + 2; 
 
             validateRequiredFields(item, lineNumber);
 
@@ -49,6 +55,7 @@ public class JsonQuestionLoader implements QuestionLoader {
             String optD = getString(item, "OptionD", lineNumber);
             char correctAnswer = getChar(item, "CorrectAnswer", lineNumber);
 
+            // Calls the constructor with all the validation logic
             Question question = new Question(category, value, questionText,
                 optA, optB, optC, optD, correctAnswer);
 
@@ -66,6 +73,8 @@ public class JsonQuestionLoader implements QuestionLoader {
 
         return gameBoard;
     }
+
+    // Helper methods are unchanged as they were already robust
 
     private void validateRequiredFields(Map<String, Object> item, int index) throws IOException {
         String[] required = {"Category", "Value", "Question", "OptionA", "OptionB", "OptionC", "OptionD", "CorrectAnswer"};
@@ -91,10 +100,8 @@ public class JsonQuestionLoader implements QuestionLoader {
                 return (Integer) val;
             } else if (val instanceof String) {
                 return Integer.parseInt((String) val);
-            } else if (val instanceof Double || val instanceof Float) {
-                double d = ((Number) val).doubleValue();
-                if (d == (int) d) return (int) d;
-            }
+            } 
+            // Removed float/double truncation for strict integer requirement
             throw new NumberFormatException("Not an integer");
         } catch (Exception e) {
             throw new IOException("Field '" + key + "' must be an integer at item " + index + " (got: " + val + ")", e);

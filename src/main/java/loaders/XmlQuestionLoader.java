@@ -6,12 +6,16 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
-import jeopardy.model.Question;
+import models.Question; 
 
+import java.io.File; 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap; 
+import java.util.Objects; 
 
-// --- DTOs for Jackson XML binding ---
+
 @JacksonXmlRootElement(localName = "questions")
 class QuestionsWrapper {
     @JacksonXmlElementWrapper(useWrapping = false)
@@ -20,11 +24,12 @@ class QuestionsWrapper {
 }
 
 class QuestionXml {
+   
     @JacksonXmlProperty(localName = "Category")
     public String Category;
 
     @JacksonXmlProperty(localName = "Value")
-    public String Value; // read as String to handle parsing safely
+    public String Value; 
 
     @JacksonXmlProperty(localName = "Question")
     public String Question;
@@ -45,33 +50,44 @@ class QuestionXml {
     public String CorrectAnswer;
 }
 
-// --- Loader ---
+
 public class XmlQuestionLoader implements QuestionLoader {
 
     private static final XmlMapper xmlMapper = new XmlMapper();
 
     @Override
     public Map<String, Map<Integer, Question>> loadQuestions(String filePath) throws IOException {
-        if (filePath == null || filePath.isEmpty()) {
-            throw new IllegalArgumentException("File path cannot be null or empty");
+        
+        Objects.requireNonNull(filePath, "File path cannot be null"); 
+
+        if (filePath.isEmpty()) {
+            throw new IllegalArgumentException("File path cannot be empty");
+        }
+
+        
+        File xmlFile = new File(filePath);
+        if (!xmlFile.exists() || !xmlFile.isFile()) {
+            throw new IOException("File not found or is a directory: " + filePath);
         }
 
         QuestionsWrapper wrapper;
         try {
-            wrapper = xmlMapper.readValue(filePath, QuestionsWrapper.class);
+            
+            wrapper = xmlMapper.readValue(xmlFile, QuestionsWrapper.class);
         } catch (Exception e) {
-            throw new IOException("Invalid XML format", e);
+            throw new IOException("Invalid XML format or reading error: " + e.getMessage(), e);
         }
 
         if (wrapper.questions == null || wrapper.questions.isEmpty()) {
             throw new IOException("No <question> elements found in XML file: " + filePath);
         }
 
+        
         Map<String, Map<Integer, Question>> gameBoard = new LinkedHashMap<>();
 
         for (int i = 0; i < wrapper.questions.size(); i++) {
             QuestionXml xml = wrapper.questions.get(i);
-            int lineNumber = i + 2;
+            int lineNumber = i + 2; 
 
             String category = validateAndGet(xml.Category, "Category", lineNumber);
             int value = parseValue(xml.Value, "Value", lineNumber);
@@ -93,8 +109,14 @@ public class XmlQuestionLoader implements QuestionLoader {
             gameBoard.get(category).put(value, question);
         }
 
+        if (gameBoard.isEmpty()) {
+            throw new IOException("No valid questions found in file: " + filePath);
+        }
+
         return gameBoard;
     }
+
+    
 
     private String validateAndGet(String value, String fieldName, int index) throws IOException {
         if (value == null || value.trim().isEmpty()) {
