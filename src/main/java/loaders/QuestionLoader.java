@@ -1,5 +1,8 @@
+package loaders;
 import java.io.IOException;
 import java.util.Map;
+import models.Question;
+
 
 
 public interface QuestionLoader {

@@ -1,4 +1,4 @@
-package jeopardy.data;
+package loaders;
 
 import java.util.Locale;
 

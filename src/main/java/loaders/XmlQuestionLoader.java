@@ -1,5 +1,5 @@
-// jeopardy/data/XmlQuestionLoader.java
-package jeopardy.data;
+
+package loaders;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;

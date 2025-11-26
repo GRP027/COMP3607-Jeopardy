@@ -1,9 +1,10 @@
 
-package jeopardy.data;
+package loaders;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+
 import jeopardy.model.Question;
 
 import java.io.IOException;

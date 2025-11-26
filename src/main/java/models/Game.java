@@ -1,10 +1,10 @@
-package oop;
+package models;
 
 import java.util.List;
 
 public class Game {
-    private List<Player> players;
-    private List<Category> categories;
+    private final List<Player> players;
+    private final List<Category> categories;
     private Player currentPlayer;
 
     public Game(List<Player> players, List<Category> categories) {

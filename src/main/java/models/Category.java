@@ -1,10 +1,12 @@
-package oop;
+package models;
+
 
 import java.util.List;
 
+
 public class Category {
-    private String title;
-    private List<Question> questions;
+    private final String title;
+    private final List<Question> questions;
 
     public Category(String title, List<Question> questions) {
         this.title = title;

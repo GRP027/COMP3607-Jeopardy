@@ -1,9 +1,11 @@
-package oop;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+
+import models.GameObserver;
 
 public class ProcessMiningLogger implements GameObserver {
     private static final String LOG_FILE = "game_event_log.csv";
