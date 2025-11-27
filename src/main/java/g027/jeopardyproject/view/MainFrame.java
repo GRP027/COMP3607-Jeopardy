@@ -71,8 +71,8 @@ public class MainFrame extends JFrame implements GameObserver {
             // Simpler: prompt for names and add players directly using the model methods
             for (int i=1;i<=count;i++){
                 String name = JOptionPane.showInputDialog(this, "Player " + i + " name:", "Player"+i);
-                if (name == null || name.isBlank()) name = "Player"+i;
-                model.getCurrentPlayer().add(new Player(name));
+                //if (name == null || name.isBlank()) name = "Player"+i;
+                //model.getCurrentPlayer().add(new Player(name));
 
             }
             rebuildPlayerPanel();
@@ -102,7 +102,7 @@ public class MainFrame extends JFrame implements GameObserver {
 
         // headers
         for (Category c : cats) {
-            JLabel header = new JLabel(c.getName(), SwingConstants.CENTER);
+            JLabel header = new JLabel(c.getTitle(), SwingConstants.CENTER);
             header.setOpaque(true);
             header.setBackground(new Color(10,90,160));
             header.setForeground(Color.WHITE);
@@ -162,7 +162,7 @@ public class MainFrame extends JFrame implements GameObserver {
             JLabel l = new JLabel(p.getName() + " : " + p.getScore());
             l.setFont(l.getFont().deriveFont(14f));
             playerPanel.add(l);
-            playerScoreLabels.put(p.getId(), l);
+            playerScoreLabels.put(p.getName(), l);//there is no player ID attribut in player class so replaced by name
         }
         revalidate(); repaint();
     }
@@ -176,7 +176,7 @@ public class MainFrame extends JFrame implements GameObserver {
     // ScoreObserver methods
     @Override
     public void scoreUpdated(Player player) {
-        JLabel lbl = playerScoreLabels.get(player.getId());
+        JLabel lbl = playerScoreLabels.get(player.getName());
         if (lbl != null) lbl.setText(player.getName() + " : " + player.getScore());
     }
 

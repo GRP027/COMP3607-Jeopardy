@@ -69,7 +69,9 @@ private final List<GameObserver> observers = new ArrayList<>();
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
-
+public List<Player> getPlayers() {
+        return players;
+    }
     
     public Question selectQuestion(String categoryTitle, int value) {
         Question selectedQuestion = this.categories.stream()
@@ -178,4 +180,6 @@ private final List<GameObserver> observers = new ArrayList<>();
             observer.update(eventDetails);
         }
     }
+
+    
 }

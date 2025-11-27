@@ -17,4 +17,10 @@ This interface defines the observer for game events, allowing implementing class
 public interface GameObserver {
     
     void update(Map<String, String> eventDetails);
+
+    void scoreUpdated(Player player);
+
+    void playerTurnChanged(Player current);
+
+    void questionAnswered(Question q);
 }

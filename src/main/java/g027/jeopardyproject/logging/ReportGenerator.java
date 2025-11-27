@@ -9,6 +9,7 @@ import java.util.Map;
 
 import g027.jeopardyproject.models.GameObserver;
 import g027.jeopardyproject.models.Player;
+import g027.jeopardyproject.models.Question;
 
 /*
 GROUP 27 JEOPARDY PROJECT - COMP3607 S01 2025/2026
@@ -112,5 +113,17 @@ public class ReportGenerator implements GameObserver {
         } catch (IOException e) {
             System.err.println("Error writing summary report: " + e.getMessage());
         }
+    }
+    @Override
+    public void scoreUpdated(Player player){
+        // Not used in this logger
+    }
+@Override
+    public void playerTurnChanged(Player current){
+        // Not used in this logger
+    }
+@Override
+    public void questionAnswered(Question q){
+        // Not used in this logger
     }
 }
