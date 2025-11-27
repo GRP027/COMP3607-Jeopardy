@@ -1,6 +1,6 @@
 // src/main/java/scoring/StandardScoring.java
 
-package scoring;
+package g027.jeopardyproject.scoring;
 
 import g027.jeopardyproject.models.Question;
 

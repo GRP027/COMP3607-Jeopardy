@@ -10,8 +10,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import g027.jeopardyproject.logging.ProcessMiningLogger;
-import scoring.ScoringStrategy;
-import scoring.StandardScoring;
+import g027.jeopardyproject.scoring.ScoringStrategy;
+import g027.jeopardyproject.scoring.StandardScoring;
 
 /*
 GROUP 27 JEOPARDY PROJECT - COMP3607 S01 2025/2026
