@@ -132,7 +132,7 @@ public class MainFrame extends JFrame implements GameObserver {
                     if (correct) {
                         JOptionPane.showMessageDialog(this, "Correct! +" + q.getValue());
                     } else {
-                        JOptionPane.showMessageDialog(this, "Incorrect! Answer: " + q.getCorrectAnswer()() + "  -" + q.getValue());
+                        JOptionPane.showMessageDialog(this, "Incorrect! Answer: " + q.getCorrectAnswer() + "  -" + q.getValue());
                     }
                     btn.setEnabled(false);
                     btn.setBackground(Color.GRAY);
