@@ -1,0 +1,35 @@
+-------------------------------------------------------------------------------
+Test set: g027.jeopardyproject.GameControllerTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.122 s <<< FAILURE! -- in g027.jeopardyproject.GameControllerTest
+g027.jeopardyproject.GameControllerTest.testSubmitAnswerIncorrect -- Time elapsed: 0.085 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <-100>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at g027.jeopardyproject.GameControllerTest.testSubmitAnswerIncorrect(GameControllerTest.java:60)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+g027.jeopardyproject.GameControllerTest.testLoadQuestionsAddsCategories -- Time elapsed: 0.014 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception thrown: java.io.IOException: File not found or is a directory: fake/path.csv
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertDoesNotThrow.createAssertionFailedError(AssertDoesNotThrow.java:84)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:53)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:36)
+	at org.junit.jupiter.api.Assertions.assertDoesNotThrow(Assertions.java:3199)
+	at g027.jeopardyproject.GameControllerTest.testLoadQuestionsAddsCategories(GameControllerTest.java:40)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+Caused by: java.io.IOException: File not found or is a directory: fake/path.csv
+	at g027.jeopardyproject.loaders.CsvQuestionLoader.loadQuestions(CsvQuestionLoader.java:41)
+	at g027.jeopardyproject.controller.GameController.loadQuestions(GameController.java:25)
+	at g027.jeopardyproject.GameControllerTest.lambda$testLoadQuestionsAddsCategories$0(GameControllerTest.java:40)
+	at org.junit.jupiter.api.AssertDoesNotThrow.assertDoesNotThrow(AssertDoesNotThrow.java:49)
+	... 6 more
+

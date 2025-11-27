@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: g027.jeopardyproject.CsvQuestionLoaderTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.264 s <<< FAILURE! -- in g027.jeopardyproject.CsvQuestionLoaderTest
+g027.jeopardyproject.CsvQuestionLoaderTest.testLoadMalformedCsv_skipsBadRows -- Time elapsed: 0.188 s <<< ERROR!
+java.io.IOException: Invalid row at line 4: expected 8 columns, got 1
+	at g027.jeopardyproject.loaders.CsvQuestionLoader.loadQuestions(CsvQuestionLoader.java:69)
+	at g027.jeopardyproject.CsvQuestionLoaderTest.testLoadMalformedCsv_skipsBadRows(CsvQuestionLoaderTest.java:45)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+

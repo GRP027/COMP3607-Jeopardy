@@ -1,14 +1,14 @@
-package src.test.java;
+package g027.jeopardyproject;
 
-import src.main.java.g027.jeopardyproject.io.CsvQuestionLoader;
-import g027.jeopardyproject.model.Category;
-import g027.jeopardyproject.model.Question;
+import g027.jeopardyproject.loaders.CsvQuestionLoader;
+import g027.jeopardyproject.models.*;
+
 import org.junit.jupiter.api.Test;
 
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +27,7 @@ public class CsvQuestionLoaderTest {
         }
 
         CsvQuestionLoader loader = new CsvQuestionLoader();
-        List<Category> cats = loader.load(tmp.toString());
+        Map<String, Map<Integer, Question>> cats = loader.loadQuestions(tmp.toString());
 
         assertEquals(2, cats.size());
     }
@@ -42,7 +42,7 @@ public class CsvQuestionLoaderTest {
         }
 
         CsvQuestionLoader loader = new CsvQuestionLoader();
-        List<Category> cats = loader.load(tmp.toString());
+        Map<String, Map<Integer, Question>> cats = loader.loadQuestions(tmp.toString());
 
         assertEquals(2, cats.size());  // Should load valid rows only
     }

@@ -1,0 +1,4 @@
+Case_ID,Player_ID,Activity,Timestamp,Category,Question_Value,Answer_Given,Result,Score_After_Play
+GAME-43A54886,System,Start Game,2025-11-27T11:23:17.0442306,,,,Successful,
+GAME-43A54886,P1,Answer Question,2025-11-27T11:23:17.0452306,categoryName1,300,correct,Incorrect,-300
+GAME-43A54886,P1,Score Updated,2025-11-27T11:23:17.0462294,categoryName1,300,,Successful,-300
