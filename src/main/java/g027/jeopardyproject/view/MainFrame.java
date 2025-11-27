@@ -2,12 +2,16 @@ package g027.jeopardyproject.view;
 
 import g027.jeopardyproject.controller.GameController;
 import g027.jeopardyproject.models.*;
+import java.lang.Thread;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  * Full GUI: Load, Start, Board, Player sidebar, Score updates.
@@ -72,7 +76,7 @@ public class MainFrame extends JFrame implements GameObserver {
             for (int i=1;i<=count;i++){
                 String name = JOptionPane.showInputDialog(this, "Player " + i + " name:", "Player"+i);
                 if (name == null || name.isBlank()) name = "Player"+i;
-                model.getCurrentPlayer().add(new Player(name));
+                model.getPlayerList().add(new Player(name));
 
             }
             rebuildPlayerPanel();
@@ -102,7 +106,7 @@ public class MainFrame extends JFrame implements GameObserver {
 
         // headers
         for (Category c : cats) {
-            JLabel header = new JLabel(c.getName(), SwingConstants.CENTER);
+            JLabel header = new JLabel(c.getTitle(), SwingConstants.CENTER);
             header.setOpaque(true);
             header.setBackground(new Color(10,90,160));
             header.setForeground(Color.WHITE);
@@ -137,7 +141,7 @@ public class MainFrame extends JFrame implements GameObserver {
                     btn.setEnabled(false);
                     btn.setBackground(Color.GRAY);
                     rebuildPlayerPanel();
-                    updateCurrentPlayerLabel();
+                    updateCurrentPlayerLabel(); 
                 });
                 questionButtons.put(q, btn);
                 grid.add(btn);
@@ -158,11 +162,11 @@ public class MainFrame extends JFrame implements GameObserver {
     private void rebuildPlayerPanel(){
         playerPanel.removeAll();
         playerScoreLabels.clear();
-        for (Player p : model.getPlayers()){
+        for (Player p : model.getPlayerList()){
             JLabel l = new JLabel(p.getName() + " : " + p.getScore());
             l.setFont(l.getFont().deriveFont(14f));
             playerPanel.add(l);
-            playerScoreLabels.put(p.getId(), l);
+            playerScoreLabels.put(p.getName(), l);
         }
         revalidate(); repaint();
     }
@@ -173,13 +177,42 @@ public class MainFrame extends JFrame implements GameObserver {
         else currentPlayerLabel.setText("Current: -");
     }
 
-    // ScoreObserver methods
+    // GameObserver method
     @Override
-    public void scoreUpdated(Player player) {
-        JLabel lbl = playerScoreLabels.get(player.getId());
-        if (lbl != null) lbl.setText(player.getName() + " : " + player.getScore());
-    }
+    public void update(Map<String, String> eventDetails) {
+        String eventType = eventDetails.get("eventType");
+        switch (eventType) {
+            case "Player Turn Changed":
+                updateCurrentPlayerLabel();
+                break;
+            case "Question Answered":
+                String questionId = eventDetails.get("questionId");
+                for (Question q : questionButtons.keySet()) {
+                    if (q.hashCode() == Integer.parseInt(questionId)) {
+                        JButton btn = questionButtons.get(q);
+                        if (btn != null) {
+                            btn.setEnabled(false);
+                            btn.setBackground(Color.GRAY);
+                        }
+                        break;
+                    }
+                }
+                break;
+            case "Score Updated":
+                String playerId = eventDetails.get("playerId");
+                String newScoreStr = eventDetails.get("newScore");
+                JLabel scoreLabel = playerScoreLabels.get(playerId);
+                if (scoreLabel != null) {
+                    scoreLabel.setText(playerId + " : " + newScoreStr);
+                }
+                break;
+            default:
+                // Other events can be handled here
+                break;
+        }
+    }   
 
+/* 
     @Override
     public void playerTurnChanged(Player current) {
         updateCurrentPlayerLabel();
@@ -190,4 +223,6 @@ public class MainFrame extends JFrame implements GameObserver {
         JButton b = questionButtons.get(q);
         if (b != null) { b.setEnabled(false); b.setBackground(Color.GRAY); }
     }
+
+    */
 }

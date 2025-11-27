@@ -70,6 +70,11 @@ private final List<GameObserver> observers = new ArrayList<>();
         return currentPlayer;
     }
 
+    public List<Player> getPlayerList() {
+        return this.players;
+    }
+
+
     
     public Question selectQuestion(String categoryTitle, int value) {
         Question selectedQuestion = this.categories.stream()
