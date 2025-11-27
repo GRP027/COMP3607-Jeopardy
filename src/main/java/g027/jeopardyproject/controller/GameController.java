@@ -1,20 +1,20 @@
 package g027.jeopardyproject.controller;
 
-import java.util.List;
+import java.util.Map;
 
-import g027.jeopardyproject.io.CsvQuestionLoader;
-import g027.jeopardyproject.io.QuestionLoader;
+import g027.jeopardyproject.loaders.CsvQuestionLoader;
+import g027.jeopardyproject.loaders.QuestionLoader;
 import g027.jeopardyproject.models.Category;
 import g027.jeopardyproject.models.Game;
 import g027.jeopardyproject.models.Player;
 import g027.jeopardyproject.models.Question;
-import g027.jeopardyproject.strategy.AnswerStrategy;
-import g027.jeopardyproject.strategy.ExactMatchStrategy;
+import g027.jeopardyproject.scoring.ScoringStrategy;
+import g027.jeopardyproject.scoring.StandardScoring;
 
 public class GameController {
 
     private final Game model;
-    private AnswerStrategy strategy = new ExactMatchStrategy();
+    private ScoringStrategy strategy = new StandardScoring();
     private final QuestionLoader loader = new CsvQuestionLoader();
 
     public GameController(Game model) {
@@ -22,18 +22,24 @@ public class GameController {
     }
 
     public void loadQuestions(String path) throws Exception {
-        List<Category> categories = loader.load(path);
-        for (Category c : categories) model.addCategory(c);
+        Map<String, Map<Integer, Question>> categories = loader.loadQuestions(path);
+        for (Map.Entry<String, Map<Integer, Question>> entry : categories.entrySet()) {
+            String categoryName = entry.getKey();
+            Map<Integer, Question> questions = entry.getValue();
+            model.getCategories().add(new Category(categoryName, questions));
+        }
     }
-//muiltiple choice function to be added later
+
+    
     public boolean submitAnswer(Player p, Question q, String userAnswer) {
-        boolean correct = strategy.isCorrect(String.valueOf(q.getcorrectAnswer()), userAnswer);
-
-        int delta = correct ? q.getValue() : -q.getValue();
-        model.updateScore(p, delta);
-        //model.nextTurn();
-
-        return correct;
+        model.processAnswer(q, userAnswer);
+        if (q.getCorrectAnswer() == userAnswer.charAt(0)) {
+            int points = strategy.evaluateAnswer(q, userAnswer);
+            p.addScore(points);
+            return true;
+        } else {
+            return false;
+        }
     }
     
 }
