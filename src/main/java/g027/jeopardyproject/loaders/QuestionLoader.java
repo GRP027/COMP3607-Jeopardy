@@ -1,6 +1,9 @@
-package scoring;
+package g027.jeopardyproject.loaders;
+import java.io.IOException;
+import java.util.Map;
 
 import g027.jeopardyproject.models.Question;
+
 
 /*
 GROUP 27 JEOPARDY PROJECT - COMP3607 S01 2025/2026
@@ -11,10 +14,8 @@ MEMBERS:
 - Reshon Nelson     |   816041070
 --------------------------------------------------------------
 
-This interface defines the strategy for scoring answers in the game.
+This interface defines the contract for loading questions from a data source.
 */
-public interface ScoringStrategy {
-
-
-    int evaluateAnswer(Question question, String playerAnswer);
+public interface QuestionLoader {
+    Map<String, Map<Integer, Question>> loadQuestions(String filePath) throws IOException;
 }

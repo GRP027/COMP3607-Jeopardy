@@ -1,6 +1,4 @@
-package scoring;
-
-import g027.jeopardyproject.models.Question;
+package g027.jeopardyproject.strategy;
 
 /*
 GROUP 27 JEOPARDY PROJECT - COMP3607 S01 2025/2026
@@ -11,10 +9,8 @@ MEMBERS:
 - Reshon Nelson     |   816041070
 --------------------------------------------------------------
 
-This interface defines the strategy for scoring answers in the game.
+This interface defines a strategy for checking if a given answer is correct.
 */
-public interface ScoringStrategy {
-
-
-    int evaluateAnswer(Question question, String playerAnswer);
+public interface AnswerStrategy {
+    boolean isCorrect(String expected, String given);
 }

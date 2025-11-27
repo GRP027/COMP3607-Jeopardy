@@ -1,6 +1,7 @@
-package scoring;
+package g027.jeopardyproject.models;
 
-import g027.jeopardyproject.models.Question;
+
+import java.util.Map;
 
 /*
 GROUP 27 JEOPARDY PROJECT - COMP3607 S01 2025/2026
@@ -11,10 +12,9 @@ MEMBERS:
 - Reshon Nelson     |   816041070
 --------------------------------------------------------------
 
-This interface defines the strategy for scoring answers in the game.
+This interface defines the observer for game events, allowing implementing classes to receive updates about game state changes.
 */
-public interface ScoringStrategy {
-
-
-    int evaluateAnswer(Question question, String playerAnswer);
+public interface GameObserver {
+    
+    void update(Map<String, String> eventDetails);
 }

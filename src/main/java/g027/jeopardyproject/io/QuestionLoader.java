@@ -1,6 +1,8 @@
-package scoring;
+package g027.jeopardyproject.io;
 
-import g027.jeopardyproject.models.Question;
+import java.util.List;
+
+import g027.jeopardyproject.models.Category;
 
 /*
 GROUP 27 JEOPARDY PROJECT - COMP3607 S01 2025/2026
@@ -11,10 +13,8 @@ MEMBERS:
 - Reshon Nelson     |   816041070
 --------------------------------------------------------------
 
-This interface defines the strategy for scoring answers in the game.
+This interface defines a how the app will be loading questions from a data source.
 */
-public interface ScoringStrategy {
-
-
-    int evaluateAnswer(Question question, String playerAnswer);
+public interface QuestionLoader {
+    List<Category> load(String path) throws Exception;
 }
