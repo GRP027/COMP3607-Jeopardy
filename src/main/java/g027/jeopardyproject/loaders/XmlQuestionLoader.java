@@ -23,17 +23,7 @@ class QuestionsWrapper {
     public List<QuestionXml> questions;
 }
 
-/*
-GROUP 27 JEOPARDY PROJECT - COMP3607 S01 2025/2026
---------------------------------------------------------------
-MEMBERS:
-- Aaron Payne       |   816009846
-- Calliste Charles  |   816036888
-- Reshon Nelson     |   816041070
---------------------------------------------------------------
 
-This class implements the QuestionLoader interface to load questions from an XML file.
-*/
 class QuestionXml {
    
     @JacksonXmlProperty(localName = "Category")
@@ -61,7 +51,17 @@ class QuestionXml {
     public String CorrectAnswer;
 }
 
+/*
+GROUP 27 JEOPARDY PROJECT - COMP3607 S01 2025/2026
+--------------------------------------------------------------
+MEMBERS:
+- Aaron Payne       |   816009846
+- Calliste Charles  |   816036888
+- Reshon Nelson     |   816041070
+--------------------------------------------------------------
 
+This class implements the QuestionLoader interface to load questions from an XML file.
+*/
 public class XmlQuestionLoader implements QuestionLoader {
 
     private static final XmlMapper xmlMapper = new XmlMapper();
