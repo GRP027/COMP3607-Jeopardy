@@ -1,4 +1,4 @@
-package g027.jeopardyproject.view;
+package g027.jeopardyproject.obsolete;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

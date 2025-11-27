@@ -2,6 +2,8 @@ package g027.jeopardyproject.view;
 
 import g027.jeopardyproject.controller.GameController;
 import g027.jeopardyproject.models.*;
+import g027.jeopardyproject.obsolete.QuestionDialog;
+
 import java.lang.Thread;
 
 import javax.swing.*;
