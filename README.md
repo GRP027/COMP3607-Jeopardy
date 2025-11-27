@@ -8,7 +8,7 @@ MEMBERS:
 --------------------------------------------------------------
 **Team:** Aaron Payne (816009846) , Calliste Charles ( 816036888), Reshon Nelson (816041070)
 **Course:** COMP3607 (Object Oriented Programming II)  
-**Repo:** [link to repo]
+**Wiki:** [link to our Wiki Page](https://github.com/GRP027/COMP3607-Jeopardy/wiki)
 
 ## Overview
 This project is a Java-based Multi-Player Jeopardy Game designed to run locally on a single device. It supports one to four players, loads dynamic question data from CSV, JSON, or XML files, logs all user interactions for process-mining analysis, and generates end-of-game summary reports in PDF, TXT, and DOCX formats. The system follows SOLID principles, incorporates multiple design patterns, and includes full JUnit testing along with Maven packaging. Documentation is provided through an organised GitHub Wiki and accompanying demonstration and reflection videos.
