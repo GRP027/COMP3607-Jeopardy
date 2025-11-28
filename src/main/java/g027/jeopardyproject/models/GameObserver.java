@@ -19,9 +19,6 @@ public interface GameObserver {
     
     void update(Map<String, String> eventDetails);
 
-    void scoreUpdated(Player player);
-
-    void playerTurnChanged(Player current);
-
-    void questionAnswered(Question q);
+   
+    
 }

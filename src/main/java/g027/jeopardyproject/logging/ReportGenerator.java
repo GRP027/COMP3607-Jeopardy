@@ -114,16 +114,6 @@ public class ReportGenerator implements GameObserver {
             System.err.println("Error writing summary report: " + e.getMessage());
         }
     }
-    @Override
-    public void scoreUpdated(Player player){
-        // Not used in this logger
-    }
-@Override
-    public void playerTurnChanged(Player current){
-        // Not used in this logger
-    }
-@Override
-    public void questionAnswered(Question q){
-        // Not used in this logger
-    }
+   
+
 }

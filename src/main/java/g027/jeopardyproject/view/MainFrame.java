@@ -77,13 +77,8 @@ public class MainFrame extends JFrame implements GameObserver {
             // Simpler: prompt for names and add players directly using the model methods
             for (int i=1;i<=count;i++){
                 String name = JOptionPane.showInputDialog(this, "Player " + i + " name:", "Player"+i);
-<<<<<<< HEAD
-                //if (name == null || name.isBlank()) name = "Player"+i;
-                //model.getCurrentPlayer().add(new Player(name));
-=======
                 if (name == null || name.isBlank()) name = "Player"+i;
                 model.getPlayerList().add(new Player(name));
->>>>>>> 70a9446286ccd59e49834373410faa3f4081743e
 
             }
             rebuildPlayerPanel();
@@ -173,11 +168,7 @@ public class MainFrame extends JFrame implements GameObserver {
             JLabel l = new JLabel(p.getName() + " : " + p.getScore());
             l.setFont(l.getFont().deriveFont(14f));
             playerPanel.add(l);
-<<<<<<< HEAD
-            playerScoreLabels.put(p.getName(), l);//there is no player ID attribut in player class so replaced by name
-=======
             playerScoreLabels.put(p.getName(), l);
->>>>>>> 70a9446286ccd59e49834373410faa3f4081743e
         }
         revalidate(); repaint();
     }
@@ -190,12 +181,6 @@ public class MainFrame extends JFrame implements GameObserver {
 
     // GameObserver method
     @Override
-<<<<<<< HEAD
-    public void scoreUpdated(Player player) {
-        JLabel lbl = playerScoreLabels.get(player.getName());
-        if (lbl != null) lbl.setText(player.getName() + " : " + player.getScore());
-    }
-=======
     public void update(Map<String, String> eventDetails) {
         String eventType = eventDetails.get("eventType");
         switch (eventType) {
@@ -228,19 +213,6 @@ public class MainFrame extends JFrame implements GameObserver {
                 break;
         }
     }   
->>>>>>> 70a9446286ccd59e49834373410faa3f4081743e
 
-/* 
-    @Override
-    public void playerTurnChanged(Player current) {
-        updateCurrentPlayerLabel();
-    }
 
-    @Override
-    public void questionAnswered(Question q) {
-        JButton b = questionButtons.get(q);
-        if (b != null) { b.setEnabled(false); b.setBackground(Color.GRAY); }
-    }
-
-    */
 }
