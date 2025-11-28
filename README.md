@@ -83,9 +83,3 @@ Run `mvn test`. Unit tests cover loaders, scoring, and logging. Add additional t
 # Demo
 Video link to 5–8 minute gameplay demo and 5–6 minute reflection video.
 
-
-# AI Usage Log
-
-| Date | Prompt | Code Generated | Member | Notes |
-|------|--------|----------------|--------|-------|
-| 2025-11-23 | ... | LoaderFactory, EventLogger | Alice | Reviewed and adapted |
